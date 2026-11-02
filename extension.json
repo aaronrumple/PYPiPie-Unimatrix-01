@@ -1,0 +1,18 @@
+{
+    "extensions": [
+        {
+            "builtin": "False",
+            "default_enabled": "True",
+            "type": "extension",
+            "rocket_mode_compatible": "False",
+            "name": "Unimatrix01",
+            "description": "Unimatrix 01 (formerly Data Pusher): push parameter values between Revit elements - category to category, same element, room, space, level, host, sheet, nested <-> parent family and more - automatically on save, sync, print and export, with optional sandboxed Python mapping rules. Mappings live in the project. Follows Revit's dark/light theme.",
+            "author": "Aaron Rumple",
+            "author_profile": "https://github.com/aaronrumple",
+            "url": "https://github.com/aaronrumple/PYPiPie-Unimatrix-01.git",
+            "website": "https://github.com/aaronrumple/PYPiPie-Unimatrix-01",
+            "image": "https://raw.githubusercontent.com/aaronrumple/PYPiPie-Unimatrix-01/main/lib/pypipie/unimatrix01.png",
+            "dependencies": []
+        }
+    ]
+}

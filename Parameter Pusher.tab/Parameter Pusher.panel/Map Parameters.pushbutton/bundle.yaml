@@ -1,0 +1,7 @@
+title:
+  en_us: "Map\nParameters"
+tooltip:
+  en_us: >-
+    Unimatrix 01: pick a source and target category and pair their parameters. Pairs for an existing category pairing are added to that mapping.
+author: Aaron Rumple
+help_url: "https://github.com/aaronrumple/PYPiPie-Unimatrix-01"

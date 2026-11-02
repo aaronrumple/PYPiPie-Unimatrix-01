@@ -1,11 +1,15 @@
-# Unimatrix 01 · Parameter Pusher for Revit
+<p align="center"><img src="lib/pypipie/unimatrix01.png" width="128" alt="Unimatrix 01"></p>
+
+# Unimatrix 01
+
+Crafted by: [Aaron Rumple, AIA](https://www.linkedin.com/in/aaronrumple/)
 
 **Push parameter values between Revit elements — automatically on save, sync, print and export.**
 
-Data Pusher is a [pyRevit](https://github.com/pyrevitlabs/pyRevit) extension. You map parameters from one category to
+Unimatrix 01 (formerly Data Pusher) is a [pyRevit](https://github.com/pyrevitlabs/pyRevit) extension. You map parameters from one category to
 another (Rooms → Doors, Sheets → Views, Walls → Windows …) or between parameters of the same element. You can add
 small, sandboxed Python rules that transform values along the way. Mappings are stored inside the project, so they
-travel with the model and run for everyone on the team.
+travel with the model and run for everyone on the team. Part of the PyPiPie tools.
 
 ![Revit 2022+](https://img.shields.io/badge/Revit-2022%2B-0696d7)
 ![pyRevit](https://img.shields.io/badge/pyRevit-extension-3da2e6)
@@ -41,7 +45,7 @@ travel with the model and run for everyone on the team.
 
 | | |
 |---|---|
-| 🔗 **Category → category** | Push between any two categories through 11 relationships: room, space, level, host, sheet, dependent view, nested family, assembly, group, matching key, or same element. |
+| 🔗 **Category → category** | Push between any two categories through 12 relationships: room, space, level, host, sheet, dependent view, parent → nested, nested → parent, assembly, group, matching key, or same element. |
 | 🔁 **Same category** | Copy one parameter into another on the same element, including instance ↔ type. |
 | ✅ **Type-safe pairing** | Every pair is graded as *exact*, *converts*, *lossy* or *incompatible*, with unit-aware conversion based on Project Units. |
 | 🔒 **Read-only filtering** | Targets that Revit won't let you write are hidden. Each element is re-checked at push time. |
@@ -49,7 +53,7 @@ travel with the model and run for everyone on the team.
 | 🛡️ **Pathological-rule protection** | A static check, runtime guards and a timed sandbox test keep a rule from ever stalling Revit. |
 | ⚙️ **Hands-off** | Runs silently on save, save-as, sync, print and export. Unchanged values are never rewritten. Workshared models are handled for you. |
 | 📦 **Portable** | Settings are stored in Extensible Storage. Mappings import and export as JSON between projects. |
-| 🌗 **Theme-aware UI** | Every dialog follows Revit's light/dark theme. There's a **?** / F1 help button on every dialog. |
+| 🌗 **Theme-aware UI** | Every dialog follows Revit's light/dark theme, with the PyPiPie title bar (help **?** / F1, maximize, close) and a status bar with hints and the version. |
 
 ![Help page](docs/images/help-overview.png)
 
@@ -69,11 +73,11 @@ travel with the model and run for everyone on the team.
 
 ### Option A — pyRevit CLI
 ```bash
-pyrevit extend ui DataPusher https://github.com/<your-account>/DataPusher.git --branch=main
+pyrevit extend ui Unimatrix01 https://github.com/aaronrumple/PYPiPie-Unimatrix-01.git --branch=main
 ```
 
 ### Option B — manual
-1. Download or clone this repository into a folder, keeping the folder name **`DataPusher.extension`**.
+1. Download or clone this repository into a folder, keeping the folder name **`Unimatrix01.extension`**.
 2. In Revit: **pyRevit → Settings → Custom Extension Directories → Add** the *parent* folder.
 3. Click **Reload**. A **Parameter Pusher** tab appears with the **Parameter Pusher** panel.
 
@@ -82,7 +86,7 @@ pyrevit extend ui DataPusher https://github.com/<your-account>/DataPusher.git --
 | **Map Parameters** | Build mappings: pick categories, pair parameters, apply. |
 | **Mappings** | One scrolling tree: each category pairing with its parameter pairs. Filter, enable/disable, edit, push, delete, rules, merge duplicates, import/export, automatic-run options. |
 | **Push Now** | Run all enabled mappings and show the results (<kbd>Shift</kbd>+click runs silently). |
-| **Help** | Opens the full HTML guide (`help/DataPusher_Help.html`). |
+| **Help** | Opens the full HTML guide (`help/Unimatrix01_Help.html`). |
 
 ---
 
@@ -122,7 +126,8 @@ pairs. Each pair can carry an optional rule. There is only ever one mapping per 
 | Level → elements on level | Levels | other | `LevelId`, level parameters, or the view's level |
 | Sheet → placed views | Sheets | Views | views placed on the sheet |
 | Parent view → dependent views | Views | Views | primary view |
-| Parent family → nested | any | any | shared nested instance → parent |
+| Parent family → nested | any | any | shared nested instance ← its parent (`SuperComponent`) |
+| Nested → parent family | any | any | parent ← its one nested A instance (`GetSubComponentIds`); several = ambiguous, skipped |
 | Assembly → members | Assemblies | other | `AssemblyInstanceId` |
 | Group → members | Model/Detail Groups | other | `GroupId` |
 
@@ -207,7 +212,7 @@ Rules run unattended and can arrive in files from other people, so they are sand
 ## Automatic runs
 
 - Hooks: `doc-saving`, `doc-saving-as`, `doc-syncing`, `doc-printing`, `file-exporting`. Each can be toggled in **Mappings**.
-- Runs are silent. A summary goes to `%APPDATA%\pyRevit\DataPusher\push.log`.
+- Runs are silent. A summary goes to `%APPDATA%\pyRevit\Unimatrix01\push.log`.
 - Unchanged values are skipped, so elements aren't borrowed needlessly.
 - Workshared: elements owned by others, or updated in central, are skipped and reported as *blocked*.
 - Warnings are suppressed. A run that changes nothing leaves no undo entry.
@@ -223,14 +228,14 @@ mapping with the same id is replaced) or **Replace all**, and it warns when the 
 
 Storage: one JSON entity on a `DataStorage` element `PyPiPie_ParamPusher`, schema `PyPiPieParamPusher`,
 GUID `6b1f6a42-2f6e-4c0e-9a9e-5d3f3f7f1b21`. These identifiers come from the extension's
-original name (PyPiPie) and are deliberately unchanged, so projects that already store mappings keep them.
+original name (PyPiPie, later Unimatrix 01) and are deliberately unchanged, so projects that already store mappings keep them.
 
 ---
 
 ## Project layout
 
 ```
-DataPusher.extension/
+Unimatrix01.extension/
 ├── Parameter Pusher.tab/                ribbon tab
 │   └── Parameter Pusher.panel/
 │       ├── Map Parameters.pushbutton/   mapping editor
@@ -247,11 +252,14 @@ DataPusher.extension/
 │   ├── rules.py         rule sandbox, helpers, value adapters, preview
 │   ├── guard.py         static analysis, AST runtime guards, sandbox test
 │   ├── hookrunner.py    silent entry point for event hooks
-│   ├── ui.py            theme-aware WPF base, message box, results window, help opener
+│   ├── ui.py            branded, theme-aware WPF frame (title bar, status bar), message box, results, help
+│   ├── unimatrix01.png  app logo (help, README)   unimatrix01_icon.png  window icon
 │   ├── mapper.py        Map Parameters dialog
 │   ├── manager.py       Mappings dialog
 │   └── rule_editor.py   rule editor
-├── help/DataPusher_Help.html  full user guide (opened by ? / F1)
+├── help/Unimatrix01_Help.html full user guide (opened by ? / F1)
+├── extension.json           pyRevit extension manifest
+├── LICENSE                  GPL-3.0
 ├── tests/                   sandbox, guard and grouping tests (pure Python)
 └── docs/images/
 ```
@@ -297,4 +305,6 @@ More in the built-in help (**Help** button, or **?** / F1 in any dialog).
 
 ## License
 
-_Add a license before publishing (for example MIT) and place it in `LICENSE`._
+GPL-3.0. See [LICENSE](LICENSE).
+
+© 2026 [Aaron Rumple, AIA](https://www.linkedin.com/in/aaronrumple/)

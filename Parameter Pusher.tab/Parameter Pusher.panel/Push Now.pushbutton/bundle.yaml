@@ -1,0 +1,7 @@
+title:
+  en_us: "Push\nNow"
+tooltip:
+  en_us: >-
+    Unimatrix 01: push all enabled mappings now and show per-pair results. Shift+Click pushes without the results window.
+author: Aaron Rumple
+help_url: "https://github.com/aaronrumple/PYPiPie-Unimatrix-01"

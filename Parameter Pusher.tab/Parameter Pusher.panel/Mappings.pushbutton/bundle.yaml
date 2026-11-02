@@ -1,0 +1,7 @@
+title:
+  en_us: "Mappings"
+tooltip:
+  en_us: >-
+    Unimatrix 01: every mapping and its parameter pairs in one window. Enable, edit, push, delete, rules, import/export and automatic-run settings.
+author: Aaron Rumple
+help_url: "https://github.com/aaronrumple/PYPiPie-Unimatrix-01"
